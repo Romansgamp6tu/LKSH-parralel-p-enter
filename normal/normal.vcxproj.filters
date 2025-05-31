@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="HTTPSRequest">
+      <UniqueIdentifier>{7b4beac6-8911-46b1-a353-748f2bb5f9c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LKSH2025 API - BASE">
+      <UniqueIdentifier>{4a9de1a8-a59c-4a39-86f4-1e58419fe487}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTP server">
+      <UniqueIdentifier>{9f5e4ab5-d54e-4a7b-b2b0-4f7246ac7d75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTP server\stats">
+      <UniqueIdentifier>{d56036a7-dbf5-44a1-83e2-5fb4eedb5240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTP server\versus">
+      <UniqueIdentifier>{502f2fb0-3436-4533-ab8f-a7272bb7d23c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTP server\console">
+      <UniqueIdentifier>{c3cb81d3-c900-43c9-ac41-4e8843ae260e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTP server\server">
+      <UniqueIdentifier>{3a2c4b77-a6a6-4e8d-add8-5f012cab22ed}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HTTPSRequest.hpp">
+      <Filter>HTTPSRequest</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="LKSHAPI.hpp">
+      <Filter>LKSH2025 API - BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="Stats.hpp">
+      <Filter>HTTP server\stats</Filter>
+    </ClInclude>
+    <ClInclude Include="Versus.hpp">
+      <Filter>HTTP server\versus</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.hpp">
+      <Filter>HTTP server\console</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.hpp">
+      <Filter>HTTP server\server</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="HTTPSRequest.cpp">
+      <Filter>HTTPSRequest</Filter>
+    </ClCompile>
+    <ClCompile Include="LKSHAPI.cpp">
+      <Filter>LKSH2025 API - BASE</Filter>
+    </ClCompile>
+    <ClCompile Include="Stats.cpp">
+      <Filter>HTTP server\stats</Filter>
+    </ClCompile>
+    <ClCompile Include="Versus.cpp">
+      <Filter>HTTP server\versus</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>HTTP server\console</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

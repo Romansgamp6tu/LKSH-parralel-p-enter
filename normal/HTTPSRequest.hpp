@@ -1,0 +1,55 @@
+#pragma once
+#include "pch.h"
+class HTTPSRequest
+{
+public:
+
+    HTTPSRequest(std::string _url, unsigned int http_version = 11);
+
+    HTTPSRequest(HTTPSRequest&) = delete;
+    HTTPSRequest(HTTPSRequest&&) = delete;
+
+    ~HTTPSRequest();
+
+    nlohmann::json Request(http::verb http_method, std::string target = "");
+
+    void set_agent_name(std::string new_agent_name);
+    void delete_agent_name(std::string new_agent_name);
+
+    void set_plain_token(std::string new_plain_token);
+    void delete_plain_token(std::string new_plain_token);
+
+protected:
+
+    struct parsed_url
+    {
+        std::string scheme;
+        std::string host;
+        std::string port;
+        std::string target;
+    };
+
+    parsed_url parse_url(const std::string& url);//simplier work with url's
+
+private:
+
+    parsed_url url;//url
+
+    net::io_context ioc;// boost io context
+
+    tcp::resolver resolver;// tcp resolver
+
+    std::unique_ptr<beast::tcp_stream> stream;// http stream
+
+    std::unique_ptr<beast::ssl_stream<beast::tcp_stream>> safe_stream; //https stream
+    std::unique_ptr<ssl::context> safe_ctx;//https context
+    std::optional<bool> is_safe;//is https
+
+    const int http_version;//http/https version
+
+    bool have_agent_name;
+    std::string agent_name;
+
+    bool have_plain_token;
+    std::string plain_token;
+};
