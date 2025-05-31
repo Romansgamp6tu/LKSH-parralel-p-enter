@@ -24,10 +24,11 @@ SetConsoleCP(CP_UTF8);
     */
 
     const std::string plain_key("a53a604c589851232232738b0596f1fc2add969dfff203ebc19259a46eabf24b");
+    const std::string goal_server("https://lksh-enter.ru");
 
     try
     {
-        HTTPSRequest https("https://lksh-enter.ru");
+        HTTPSRequest https(goal_server);
         https.set_plain_token(plain_key);
         auto teams_raw = get_teams(https);
         std::set<int> players_ids;
@@ -63,7 +64,7 @@ SetConsoleCP(CP_UTF8);
     }
     catch (std::exception& e)
     {
-        std::cerr << "Error: " << e.what() << std::endl;
+        std::cerr << "Programm downed with error: " << e.what() << std::endl;
     }
     system("pause");
     return 0;
