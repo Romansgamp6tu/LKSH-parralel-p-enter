@@ -51,11 +51,14 @@ void client()
 
 void server()
 {
+    std::clog << "Starting server..." << std::endl;
     net::io_context ioc;
     global_data.https = new HTTPSRequest(SERVER_NAME);
     global_data.https->set_plain_token(PLAIN_KEY);
+    std::clog << "collecting data..." << std::endl;
     global_data.sync();
-    auto srv = std::make_shared<Server>(8080, ioc);
+    std::clog << "Server started on port " << SERVER_PORT << std::endl;
+    auto srv = std::make_shared<Server>(SERVER_PORT, ioc);
     srv->run();
     ioc.run();
 }

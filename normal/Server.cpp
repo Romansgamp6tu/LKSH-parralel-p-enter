@@ -92,14 +92,16 @@ void Session::handle()
 			res.result(http::status::ok);
 			res.set(http::field::content_type, "application/json");
 			std::string body;
-			body.assign(reinterpret_cast<const char*>(u8R"([)"));
 			auto goals = get_goals_of_player(player_id, global_data.premium_matches);
+			body.push_back(u8'[');
 			for (int idx = 0; idx < goals.size(); idx++)
 			{
-				body.assign(reinterpret_cast<const char*>(u8R"({"match":)") + std::to_string(goals[idx].match_id) + reinterpret_cast<const char*>(u8R"(,"time":)") 
-					+ std::to_string(goals[idx].time) + reinterpret_cast<const char*>(u8R"(})"));
-				if (idx < goals.size() - 1) body.assign(reinterpret_cast<const char*>(u8R"(,)"));
+				body += reinterpret_cast<const char*>(u8R"({"match":)") + std::to_string(goals[idx].match_id) + reinterpret_cast<const char*>(u8R"(,"time":)") 
+					+ std::to_string(goals[idx].time) + reinterpret_cast<const char*>(u8R"(})");
+				if (idx < goals.size() - 1) body.push_back(u8',');
 			}
+			body.push_back(u8']');
+			
 			res.body() = body;
 		}
 		catch (...)
