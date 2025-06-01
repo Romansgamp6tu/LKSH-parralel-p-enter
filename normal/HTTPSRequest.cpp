@@ -166,8 +166,7 @@ nlohmann::json HTTPSRequest::Request(http::verb http_method, std::string target)
 		if (res.result() == http::status::too_many_requests)
 		{
 			//std::clog << "429 SHUTR UP =))" << std::endl;
-			time_t t = clock();
-			while (clock() - t < 2'000) {}
+			std::this_thread::sleep_for(std::chrono::seconds(2));
 		}
 	} while (res.result() == http::status::too_many_requests);
 #endif
