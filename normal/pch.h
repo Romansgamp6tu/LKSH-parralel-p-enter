@@ -16,6 +16,8 @@
 #include <regex>
 #include <set>
 #include <memory>
+#include <atomic>
+#include "Compile_settings.h"
 
 namespace beast = boost::beast;
 namespace http = beast::http;

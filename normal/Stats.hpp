@@ -9,4 +9,4 @@ struct StatResults
     int delta_goals;
 };
 
-StatResults get_stat_results(std::string team, std::map<std::string, Team>& teams, std::vector<Match>& matches);
+StatResults get_stat_results(std::string team, std::map<std::string, Team> teams, std::vector<Match> matches);

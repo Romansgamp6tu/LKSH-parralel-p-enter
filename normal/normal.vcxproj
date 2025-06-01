@@ -143,11 +143,13 @@
     <ClCompile Include="HTTPSRequest.cpp" />
     <ClCompile Include="LKSHAPI.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Server.cpp" />
     <ClCompile Include="Stats.cpp" />
     <ClCompile Include="Versus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.hpp" />
+    <ClInclude Include="Compile_settings.h" />
     <ClInclude Include="HTTPSRequest.hpp" />
     <ClInclude Include="LKSHAPI.hpp" />
     <ClInclude Include="pch.h" />

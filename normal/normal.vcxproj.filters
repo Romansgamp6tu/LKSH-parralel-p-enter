@@ -43,6 +43,7 @@
     <ClInclude Include="Server.hpp">
       <Filter>HTTP server\server</Filter>
     </ClInclude>
+    <ClInclude Include="Compile_settings.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -60,6 +61,9 @@
     </ClCompile>
     <ClCompile Include="Command.cpp">
       <Filter>HTTP server\console</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>HTTP server\server</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

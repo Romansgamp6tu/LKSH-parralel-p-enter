@@ -1,6 +1,6 @@
-#include"Versus.hpp"
+#include "Versus.hpp"
 
-int get_players_meetings(int id1, int id2, std::vector<Team>& teams_raw, std::vector<Match>& matches)
+int get_players_meetings(int id1, int id2, std::vector<Team> teams_raw, std::vector<Match> matches)
 {
     std::vector<int> tp1, tp2;
     for (auto& team : teams_raw)
