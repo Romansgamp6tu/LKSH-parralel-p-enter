@@ -32,9 +32,15 @@ nlohman json
 при вопросах / несовместимостях пишите в issues, спасибо за внимание =))
 
 скрины:
-#CLIENT
+# CLIENT
+
+
 ![image](https://github.com/user-attachments/assets/b55c9dad-1eaa-4f76-afe4-0355491e564f)
-#SERVER
+
+
+# SERVER
+
+
 ![image](https://github.com/user-attachments/assets/2eead37e-1657-438f-b24e-73ff5a7ff566)
 ![image](https://github.com/user-attachments/assets/95a7a160-d085-496a-9ef3-1daa1d83fc51)
 ![image](https://github.com/user-attachments/assets/505fa8df-e77d-4b8a-82ec-f1244af0d1cf)
