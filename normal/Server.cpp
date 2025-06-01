@@ -111,6 +111,38 @@ void Session::handle()
 			res.body() = reinterpret_cast<const char*>(u8R"(Not found)");
 		}
 	}
+	else if (path == "/front/stats")
+	{
+		try
+		{
+			res.result(http::status::ok);
+			res.set(http::field::content_type, "text/html");
+			std::string body(reinterpret_cast<const char*>(u8R"(<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><title>Team Statistics</title></head><body><h2>Team Statistics</h2><form id="statsForm" action="/front/stats" method="get" onsubmit="event.preventDefault(); goToStats();"><label for="team_name">Team name:</label><input type="text" id="team_name" name="team_name" required><button type="submit">Find statistics</button></form><div id="statsResult"></div><script> function goToStats() { const name = document.getElementById('team_name').value.trim(); if (name) { window.location.href = `/front/stats?team_name=${encodeURIComponent(name)}`; } } function getQueryParam(name) { const params = new URLSearchParams(window.location.search); return params.get(name); } const teamName = getQueryParam('team_name'); if (teamName) { fetch(`/stats?team_name=${encodeURIComponent(teamName)}`) .then(resp => resp.json()) .then(data => { document.getElementById('statsResult').innerHTML = ` <h3>Статистика для "${teamName}"</h3><ul><li>Побед: <b>${data.win_count}</b></li><li>Поражений: <b>${data.lose_count}</b></li><li>Разница голов: <b>${data.delta_goals}</b></li></ul> `; }) .catch(() => { document.getElementById('statsResult').innerHTML = `<span style="color:red">Ошибка получения статистики</span>`; }); } </script></body></html>)"));
+			res.body() = body;
+		}
+		catch (...)
+		{
+			res.result(http::status::not_found);
+			res.set(http::field::content_type, "text/plain");
+			res.body() = reinterpret_cast<const char*>(u8R"(Not found)");
+		}
+	}
+	else if (path == "/front/versus")
+	{
+		try
+		{
+			res.result(http::status::ok);
+			res.set(http::field::content_type, "text/html");
+			std::string body(reinterpret_cast<const char*>(u8R"(<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><title>Versus Players</title></head><body><h2>Versus: Find Matches Between Players</h2><form id="versusForm" action="/front/versus" method="get" onsubmit="event.preventDefault(); goToVersus();"><label for="player1_id">Player 1 ID:</label><input type="text" id="player1_id" name="player1_id" required><br><label for="player2_id">Player 2 ID:</label><input type="text" id="player2_id" name="player2_id" required><br><button type="submit">Find matches</button></form><div id="versusResult"></div><script> function goToVersus() { const id1 = document.getElementById('player1_id').value.trim(); const id2 = document.getElementById('player2_id').value.trim(); if (id1 && id2) { window.location.href = `/front/versus?player1_id=${encodeURIComponent(id1)}&player2_id=${encodeURIComponent(id2)}`; } } function getQueryParam(name) { const params = new URLSearchParams(window.location.search); return params.get(name); } const p1 = getQueryParam('player1_id'); const p2 = getQueryParam('player2_id'); if (p1 && p2) { fetch(`/versus?player1_id=${encodeURIComponent(p1)}&player2_id=${encodeURIComponent(p2)}`) .then(resp => resp.json()) .then(data => { document.getElementById('versusResult').innerHTML = ` <h3>Игроки ${p1} vs ${p2}</h3><p>Количество встреч: <b>${data.matches_count}</b></p> `; }) .catch(() => { document.getElementById('versusResult').innerHTML = `<span style="color:red">Ошибка получения данных</span>`; }); } </script></body></html>)"));
+			res.body() = body;
+		}
+		catch (...)
+		{
+			res.result(http::status::not_found);
+			res.set(http::field::content_type, "text/plain");
+			res.body() = reinterpret_cast<const char*>(u8R"(Not found)");
+		}
+	}
 	else
 	{
 		res.result(http::status::not_found);
