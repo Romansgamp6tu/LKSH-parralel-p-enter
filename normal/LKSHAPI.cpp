@@ -37,6 +37,38 @@ std::vector<Match> get_matches(HTTPSRequest& req)
     return matches;
 }
 
+std::vector<MatchPremium> get_premium_matches(HTTPSRequest& req)
+{
+    std::vector<nlohmann::json> matches_array = req.Request(http::verb::get, "matches").get<std::vector<nlohmann::json>>();
+    std::vector<MatchPremium> matches;
+    matches.reserve(matches_array.size() + 1);
+    for (auto& match : matches_array)
+    {
+        int match_id = int(match["id"]);
+        std::vector<nlohmann::json> goals_array = req.Request(http::verb::get, "goals?match_id=" + std::to_string(match_id)).get<std::vector<nlohmann::json>>();
+        std::vector<Goal> goals;
+        goals.reserve(goals_array.size() + 1);
+        for (auto& i : goals_array)
+        {
+            goals.push_back({ int(i["id"]), int(i["player"]), int(i["match"]), int(i["minute"]) });
+        }
+        matches.push_back({ match_id, int(match["team1"]), int(match["team1_score"]), int(match["team2"]), int(match["team2_score"]), goals });
+    }
+    return matches;
+}
+
+std::vector<Goal> get_goals_of_match(HTTPSRequest& req, int match_id)
+{
+    std::vector<nlohmann::json> goals_array = req.Request(http::verb::get, "goals?match_id=" + std::to_string(match_id)).get<std::vector<nlohmann::json>>();
+    std::vector<Goal> goals;
+    goals.reserve(goals_array.size() + 1);
+    for (auto& i : goals_array)
+    {
+        goals.push_back({ int(i["id"]), int(i["player"]), int(i["match"]), int(i["minute"]) });
+    }
+    return goals;
+}
+
 std::vector<Team> get_teams(HTTPSRequest& req)
 {
     std::vector<nlohmann::json> teams_array = req.Request(http::verb::get, "teams").get<std::vector<nlohmann::json>>();
@@ -52,4 +84,10 @@ Team get_team(HTTPSRequest& req, int team_id)
 {
     nlohmann::json team = req.Request(http::verb::get, "teams/" + std::to_string(team_id));
     return { int(team["id"]), std::string(team["name"]), team["players"].get<std::vector<int>>() };
+}
+
+void authorise(HTTPSRequest& req, std::string reason)
+{
+    std::cout << std::string(reinterpret_cast<const char*>(u8R"({"reason":")")) + reason + std::string(reinterpret_cast<const char*>(u8R"("})")) << std::endl;
+    req.post(std::string(reinterpret_cast<const char*>(u8R"({"reason":")")) + reason + std::string(reinterpret_cast<const char*>(u8R"("})")), "login");
 }

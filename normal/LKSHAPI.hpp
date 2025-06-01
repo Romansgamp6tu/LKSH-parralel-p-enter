@@ -25,6 +25,28 @@ struct Match
 std::vector<Match> get_matches(HTTPSRequest& req);
 
 
+struct Goal
+{
+    int goal_id;
+    int player_id;
+    int match_id;
+    int minute;
+};
+
+struct MatchPremium
+{
+    int id;
+    int team1_id;
+    int team1_score;
+    int team2_id;
+    int team2_score;
+    std::vector<Goal> goals;
+};
+
+std::vector<MatchPremium> get_premium_matches(HTTPSRequest& req);
+std::vector<Goal> get_goals_of_match(HTTPSRequest& req, int match_id);
+
+
 struct Team
 {
     int id;
@@ -34,3 +56,6 @@ struct Team
 
 std::vector<Team> get_teams(HTTPSRequest& req);
 Team get_team(HTTPSRequest& req, int team_id);
+
+
+void authorise(HTTPSRequest& req, std::string reason);

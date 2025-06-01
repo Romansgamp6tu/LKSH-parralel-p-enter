@@ -4,6 +4,14 @@
 #include "Command.hpp"
 #include "Server.hpp"
 
+void print_json(nlohmann::json j)
+{
+    for (int i = 0; i < j.size(); i++)
+    {
+        std::cout << j.dump();
+    }
+}
+
 void client()
 {
     HTTPSRequest https(SERVER_NAME);
@@ -72,7 +80,8 @@ SetConsoleCP(CP_UTF8);
 #else
 #error "could not compile nothing!"
 #endif
-
+        //authorise(https,std::string(reinterpret_cast<const char*>(u8R"(Тем, кто знают как работает промка, этот курс не нужен, они же ведь знают. Я - тот кто хочет научиться этому исскуству.)")));
+        //print_json(https.Request(http::verb::get, "goals?match_id=5"));
     }
     catch (std::exception& e)
     {

@@ -22,6 +22,9 @@
     <Filter Include="HTTP server\server">
       <UniqueIdentifier>{3a2c4b77-a6a6-4e8d-add8-5f012cab22ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HTTP server\goals">
+      <UniqueIdentifier>{dc05efb2-f30f-400d-ad0d-c31d58c50f35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HTTPSRequest.hpp">
@@ -44,6 +47,9 @@
       <Filter>HTTP server\server</Filter>
     </ClInclude>
     <ClInclude Include="Compile_settings.h" />
+    <ClInclude Include="Goals.hpp">
+      <Filter>HTTP server\goals</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -64,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="Server.cpp">
       <Filter>HTTP server\server</Filter>
+    </ClCompile>
+    <ClCompile Include="Goals.cpp">
+      <Filter>HTTP server\goals</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,5 +1,7 @@
 #include "Server.hpp"
 
+Data global_data;
+
 void Data::sync()
 {
 	teams_raw = get_teams(*https);
@@ -20,6 +22,8 @@ void Data::sync()
 	{
 		teams[team.name] = team;
 	}
+
+	premium_matches = get_premium_matches(*https);
 }
 
 Session::Session(tcp::socket skt) : socket(std::move(skt)) {}
@@ -51,7 +55,8 @@ void Session::handle()
 			int player2 = std::stoi(get_param(query, "player2_id"));
 			res.result(http::status::ok);
 			res.set(http::field::content_type, "application/json");
-			res.body() = std::string(reinterpret_cast<const char*>(u8R"({"count_of_meetings" : )")) + std::to_string(get_players_meetings(player1, player2, global_data.teams_raw, global_data.matches)) + reinterpret_cast<const char*>(u8R"(})");
+			res.body() = std::string(reinterpret_cast<const char*>(u8R"({"count_of_meetings" : )")) 
+				+ std::to_string(get_players_meetings(player1, player2, global_data.teams_raw, global_data.matches)) + reinterpret_cast<const char*>(u8R"(})");
 		}
 		catch (...)
 		{
@@ -71,6 +76,31 @@ void Session::handle()
 				+ reinterpret_cast<const char*>(u8R"(, "lose_count" : )") + std::to_string(get_stat_results(team_name, global_data.teams, global_data.matches).lose_count)
 				+ reinterpret_cast<const char*>(u8R"(, "delta_goals" : )") + std::to_string(get_stat_results(team_name, global_data.teams, global_data.matches).delta_goals)
 				+ reinterpret_cast<const char*>(u8R"(})");
+		}
+		catch (...)
+		{
+			res.result(http::status::not_found);
+			res.set(http::field::content_type, "text/plain");
+			res.body() = reinterpret_cast<const char*>(u8R"(Not found)");
+		}
+	}
+	else if (path == "/goals")
+	{
+		try
+		{
+			int player_id = std::stoi(get_param(query, "player_id"));
+			res.result(http::status::ok);
+			res.set(http::field::content_type, "application/json");
+			std::string body;
+			body.assign(reinterpret_cast<const char*>(u8R"([)"));
+			auto goals = get_goals_of_player(player_id, global_data.premium_matches);
+			for (int idx = 0; idx < goals.size(); idx++)
+			{
+				body.assign(reinterpret_cast<const char*>(u8R"({"match":)") + std::to_string(goals[idx].match_id) + reinterpret_cast<const char*>(u8R"(,"time":)") 
+					+ std::to_string(goals[idx].time) + reinterpret_cast<const char*>(u8R"(})"));
+				if (idx < goals.size() - 1) body.assign(reinterpret_cast<const char*>(u8R"(,)"));
+			}
+			res.body() = body;
 		}
 		catch (...)
 		{
